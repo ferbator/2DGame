@@ -12,6 +12,7 @@ public class Main {
         game.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         JFrame frame = new JFrame(Game.NAME);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getRootPane().setBorder(BorderFactory.createEmptyBorder());
         frame.setLayout(new BorderLayout());
         frame.add(game, BorderLayout.CENTER);
         frame.pack();

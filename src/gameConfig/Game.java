@@ -1,16 +1,12 @@
 package gameConfig;
 
+import entities.Map;
+import entities.Player;
 import keyboardDependens.KeyInputHandler;
-import sprites.Sprite;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serial;
-import java.util.Objects;
 
 
 public class Game extends Canvas implements Runnable {
@@ -19,15 +15,13 @@ public class Game extends Canvas implements Runnable {
 
     private Boolean running;
 
-    public static Integer WIDTH = 500;
-    public static Integer HEIGHT = 500;
+    public static Integer WIDTH = 600;
+    public static Integer HEIGHT = 600;
     public static String NAME = "Test";
+    private Player player;
+    private Map map;
 
-    public static Sprite hero;
     private KeyInputHandler keyInputHandler;
-
-    private static Integer x = 0;
-    private static Integer y = 0;
 
     public void start() {
         running = true;
@@ -50,7 +44,8 @@ public class Game extends Canvas implements Runnable {
 
     public void init() {
         addKeyListener(keyInputHandler);
-        hero = getSprite("assets\\test_hero.png");
+        player = new Player();
+        map = new Map();
     }
 
     public void render() {
@@ -64,38 +59,15 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.darkGray);
         g.fillRect(0, 0, getWidth(), getHeight());
-        hero.draw(g, x, y);
+        map.drowing(g);
+        player.drowing(g);
         g.dispose();
         bs.show();
     }
 
 
     public void update(long delta) {
-        if (keyInputHandler.isLeftPressed()) {
-            x--;
-        }
-        if (keyInputHandler.isRightPressed()) {
-            x++;
-        }
-        if (keyInputHandler.isUpPressed()) {
-            y--;
-        }
-        if (keyInputHandler.isDownPressed()) {
-            y++;
-        }
-
-        System.out.println(x);
-        System.out.println(y);
-    }
-
-    public Sprite getSprite(String path) {
-        BufferedImage sourceImage = null;
-        try {
-            File file = new File(path);
-            sourceImage = ImageIO.read(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new Sprite(Toolkit.getDefaultToolkit().createImage(Objects.requireNonNull(sourceImage).getSource()));
+        player.moving(keyInputHandler);
+        map.moving(keyInputHandler);
     }
 }
