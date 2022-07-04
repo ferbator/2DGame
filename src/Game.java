@@ -1,8 +1,8 @@
+import keyboardDependens.KeyInputHandler;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,23 +15,21 @@ public class Game extends Canvas implements Runnable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private boolean running;
+    private Boolean running;
 
-    public static int WIDTH = 500;
-    public static int HEIGHT = 500;
+    public static Integer WIDTH = 500;
+    public static Integer HEIGHT = 500;
     public static String NAME = "Test";
 
-    private boolean leftPressed = false;
-    private boolean rightPressed = false;
-    private boolean upPressed = false;
-    private boolean downPressed = false;
-
     public static Sprite hero;
-    private static int x = 0;
-    private static int y = 0;
+    private KeyInputHandler keyInputHandler;
+
+    private static Integer x = 0;
+    private static Integer y = 0;
 
     public void start() {
         running = true;
+        keyInputHandler = new KeyInputHandler();
         new Thread(this).start();
     }
 
@@ -49,7 +47,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void init() {
-        addKeyListener(new KeyInputHandler());
+        addKeyListener(keyInputHandler);
         hero = getSprite("assets\\test_hero.png");
     }
 
@@ -71,16 +69,16 @@ public class Game extends Canvas implements Runnable {
 
 
     public void update(long delta) {
-        if (leftPressed) {
+        if (keyInputHandler.isLeftPressed()) {
             x--;
         }
-        if (rightPressed) {
+        if (keyInputHandler.isRightPressed()) {
             x++;
         }
-        if (upPressed) {
+        if (keyInputHandler.isUpPressed()) {
             y--;
         }
-        if (downPressed) {
+        if (keyInputHandler.isDownPressed()) {
             y++;
         }
 
@@ -111,37 +109,5 @@ public class Game extends Canvas implements Runnable {
         frame.setResizable(false);
         frame.setVisible(true);
         game.start();
-    }
-
-    private class KeyInputHandler extends KeyAdapter {
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                leftPressed = true;
-            }
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                rightPressed = true;
-            }
-            if (e.getKeyCode() == KeyEvent.VK_UP) {
-                upPressed = true;
-            }
-            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                downPressed = true;
-            }
-        }
-
-        public void keyReleased(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                leftPressed = false;
-            }
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                rightPressed = false;
-            }
-            if (e.getKeyCode() == KeyEvent.VK_UP) {
-                upPressed = false;
-            }
-            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                downPressed = false;
-            }
-        }
     }
 }
