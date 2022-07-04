@@ -1,7 +1,9 @@
+package gameConfig;
+
 import keyboardDependens.KeyInputHandler;
+import sprites.Sprite;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -95,19 +97,5 @@ public class Game extends Canvas implements Runnable {
             e.printStackTrace();
         }
         return new Sprite(Toolkit.getDefaultToolkit().createImage(Objects.requireNonNull(sourceImage).getSource()));
-    }
-
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        JFrame frame = new JFrame(Game.NAME);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.getRootPane().setBorder(BorderFactory.createBevelBorder(10,Color.black,Color.ORANGE));
-        frame.setLayout(new BorderLayout());
-        frame.add(game, BorderLayout.CENTER);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setVisible(true);
-        game.start();
     }
 }

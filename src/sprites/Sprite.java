@@ -1,3 +1,5 @@
+package sprites;
+
 import java.awt.*;
 
 public class Sprite {
