@@ -27,8 +27,8 @@ public class Player {
     }
 
     public void moving(KeyInputHandler keyControl) {
-        int h = HEIGHT - hero.getHeight();
-        int w = WIDTH - hero.getWidth();
+        float h = HEIGHT - hero.getHeight();
+        float w = WIDTH - hero.getWidth();
 
         if (keyControl.isLeftPressed()) {
             if (x > 0 && x <= h) {

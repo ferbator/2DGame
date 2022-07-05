@@ -1,24 +1,32 @@
 package sprites;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Objects;
+import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Transform;
 
-public class Sprite {
+import java.awt.*;
+
+public class Sprite extends Shape {
     private Image image; //изображение
 
     public Sprite(Image image) {
         this.image = image;
     }
 
-    public int getWidth() {
+    @Override
+    public Shape transform(Transform transform) {
+        return null;
+    }
+
+    @Override
+    protected void createPoints() {
+
+    }
+
+    public float getWidth() {
         return image.getWidth(null);
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return image.getHeight(null);
     }
 

@@ -27,8 +27,8 @@ public class Map {
     }
 
     public Boolean moving(KeyInputHandler keyControl) {
-        int h = map.getHeight() - HEIGHT;
-        int w = map.getWidth() - WIDTH;
+        float h = map.getHeight() - HEIGHT;
+        float w = map.getWidth() - WIDTH;
 
         if (keyControl.isLeftPressed()) {
             if (x >= -h && x < 0) {
