@@ -10,9 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static gameConfig.Game.HEIGHT;
-import static gameConfig.Game.WIDTH;
-
 public class Map {
     public static Sprite map;
     private static Integer x = 0;

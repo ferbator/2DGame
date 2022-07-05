@@ -1,23 +1,23 @@
-import gameConfig.Game;
+import gameConfig.BasicGame;
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
 
-import javax.swing.*;
-import java.awt.*;
+public class Main extends StateBasedGame {
+    public Main(String name) {
+        super(name);
+    }
 
-import static gameConfig.Game.HEIGHT;
-import static gameConfig.Game.WIDTH;
+    public static void main(String[] args) throws SlickException {
+        AppGameContainer agc = new AppGameContainer(new Main("Game Title"));
+        agc.setDisplayMode(600, 600, false);
+        agc.setAlwaysRender(true);
+        agc.start();
+    }
 
-public class Main {
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        JFrame frame = new JFrame(Game.NAME);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getRootPane().setBorder(BorderFactory.createEmptyBorder());
-        frame.setLayout(new BorderLayout());
-        frame.add(game, BorderLayout.CENTER);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setVisible(true);
-        game.start();
+    @Override
+    public void initStatesList(GameContainer gameContainer) throws SlickException {
+        addState(new BasicGame());
     }
 }
