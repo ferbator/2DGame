@@ -63,7 +63,7 @@ public class BasicGame extends BasicGameState {
         else
             detectBarrier = false;
         if (input.isKeyDown(Input.KEY_LSHIFT)) {
-            speed = 0.8f;
+            speed = 0.5f;
         } else
             speed = 0.1f;
 
@@ -80,7 +80,7 @@ public class BasicGame extends BasicGameState {
             if (x > barrier.getMaxX() - square.getWidth() && x <= barrier.getMaxX() - 2)
                 x = barrier.getMaxX() - square.getWidth() - 3;
             // right border
-            if (x > barrier.getMaxX() - 2 && x <= barrier.getMaxX())
+            if (x > barrier.getMaxX() - 2 && x <= barrier.getMaxX() || x > barrier.getMaxX())
                 x = barrier.getMaxX() + 3;
 
             /*Y*/
@@ -94,7 +94,7 @@ public class BasicGame extends BasicGameState {
             if (y > barrier.getMaxY() - square.getHeight() && y <= barrier.getMaxY() - 2)
                 y = barrier.getMaxY() - square.getHeight() - 3;
             // right border
-            if (y > barrier.getMaxY() - 2 && y <= barrier.getMaxY())
+            if (y > barrier.getMaxY() - 2 && y <= barrier.getMaxY() || y > barrier.getMaxY())
                 y = barrier.getMaxY() + 3;
 
         }
