@@ -11,7 +11,7 @@ public class Main extends StateBasedGame {
 
     public static void main(String[] args) throws SlickException {
         AppGameContainer agc = new AppGameContainer(new Main("Game Title"));
-        agc.setDisplayMode(600, 600, false);
+        agc.setDisplayMode(960, 960, false);
         agc.setAlwaysRender(true);
         agc.start();
     }

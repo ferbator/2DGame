@@ -1,103 +1,98 @@
 package gameConfig;
 
-import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.tiled.TiledMap;
 
 public class BasicGame extends BasicGameState {
-    private int id = 1100;
+    private TiledMap map;
     private Rectangle square;
-    private Rectangle barrier;
     private SpriteSheet hero;
-    private Boolean detectBarrier = false;
-    private float x = 140;
-    private float y = 300;
+    private float x = 140f;
+    private float y = 300f;
     private float speed = 0.1f;
+    private boolean[][] blocked;
+
+    private static final int TILEWIDTH = 32;
+    private static final int TILEHEIGHT = 32;
+    private static final int NUMBEROFTILESINAROW = 30;
+    private static final int NUMBEROFTILESINACOLUMN = 30;
+    private static final int NUMBEROFLAYERS = 2;
+
+    private void initializeBlocked() {
+        for (int l = 0; l < NUMBEROFLAYERS; l++) {
+            String layerValue = map.getLayerProperty(l, "blocked", "false");
+            if (layerValue.equals("true")) {
+                for (int c = 0; c < NUMBEROFTILESINACOLUMN; c++) {
+                    for (int r = 0; r < NUMBEROFTILESINAROW; r++) {
+                        if (map.getTileId(c, r, l) != 0) {
+                            blocked[c][r] = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     public int getID() {
-        return id;
+        return 1100;
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-//        BufferedImage sourceImage = null;
-//        File file = new File("assets\\test_hero.png");
-//        try {
-//            sourceImage = ImageIO.read(file);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        hero = new Sprite(Toolkit.getDefaultToolkit().createImage(Objects.requireNonNull(sourceImage).getSource()));
-
-        //square = new Rectangle(GameContainer.getWidth()/2 - 20, GameContainer.getHeight()/2 - 20, 40, 40);
+        square = new Rectangle((int) x, (int) y, 50, 50);
+        map = new TiledMap("entities/map1.tmx");
+        blocked = new boolean[NUMBEROFTILESINAROW][NUMBEROFTILESINACOLUMN];
+        initializeBlocked();
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        graphics.drawString("Howdy! " + "X:" + x + "  Y:" + y + "\n" + detectBarrier + "V:" + speed, 300, 10);
-        graphics.setColor(Color.green);
-        square = new Rectangle(x, y, 50, 50);
-        barrier = new Rectangle(200, 300, 300, 100);
+        map.render(0, 0);
+        graphics.setColor(Color.black);
+        graphics.drawString("Howdy! " + "X:" + x + "  Y:" + y + "\n" + " V:" + speed, 500, 50);
         graphics.fill(square);
-        graphics.draw(barrier);
+        graphics.setBackground(Color.white);
+    }
+
+    private boolean isBlocked(float x, float y) {
+        int xBlock = (int) x / TILEWIDTH;
+        int yBlock = (int) y / TILEHEIGHT;
+        return blocked[xBlock][yBlock];
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input input = gameContainer.getInput();
-        if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A))
-            x -= speed * i;
-        //square.setX(square.getX() - );
-        if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D))
-            x += speed * i;
-        if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
-            y -= speed * i;
-        if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S))
-            y += speed * i;
-
-        if (square.intersects(barrier))
-            detectBarrier = true;
-        else
-            detectBarrier = false;
-        if (input.isKeyDown(Input.KEY_LSHIFT)) {
-            speed = 0.5f;
-        } else
-            speed = 0.1f;
-
-
-        if (square.intersects(barrier)) {
-            /*X*/
-            // left border
-            if (x <= barrier.getX() - 2)
-                x = barrier.getX() - square.getWidth() - 3;
-            // right border
-            if (x > barrier.getX() - 2 && x <= barrier.getX())
-                x = barrier.getX() + 3;
-            // left border
-            if (x > barrier.getMaxX() - square.getWidth() && x <= barrier.getMaxX() - 2)
-                x = barrier.getMaxX() - square.getWidth() - 3;
-            // right border
-            if (x > barrier.getMaxX() - 2 && x <= barrier.getMaxX() || x > barrier.getMaxX())
-                x = barrier.getMaxX() + 3;
-
-            /*Y*/
-            // left border
-            if (y <= barrier.getY() - 2)
-                y = barrier.getY() - square.getHeight() - 3;
-            // right border
-            if (y > barrier.getY() - 2 && y <= barrier.getY())
-                y = barrier.getY() + 3;
-            // left border
-            if (y > barrier.getMaxY() - square.getHeight() && y <= barrier.getMaxY() - 2)
-                y = barrier.getMaxY() - square.getHeight() - 3;
-            // right border
-            if (y > barrier.getMaxY() - 2 && y <= barrier.getMaxY() || y > barrier.getMaxY())
-                y = barrier.getMaxY() + 3;
-
+        if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A)) {
+            if (!isBlocked(x - i * speed, y + 1) && !isBlocked(x - i * speed, y + TILEHEIGHT - 1)) {
+                x -= speed * i;
+                square.setX((int) x);
+            }
         }
-    }
+        if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D)) {
+            if (!isBlocked(x + TILEWIDTH + i * speed, y + TILEHEIGHT - 1) && !isBlocked(x + TILEWIDTH + i * speed, y + 1)) {
+                x += speed * i;
+                square.setX((int) x);
+            }
+        }
+        if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W)) {
+            if (!isBlocked(x + TILEWIDTH - 1, y - i * speed) && !isBlocked(x + 1, y - i * speed)) {
+                y -= speed * i;
+                square.setY((int) y);
+            }
+        }
+        if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S)) {
+            if (!isBlocked(x + TILEWIDTH - 1, y + TILEHEIGHT + i * speed) && !isBlocked(x + 1, y + TILEHEIGHT + i * speed)) {
+                y += speed * i;
+                square.setY((int) y);
+            }
+        }
+        if (input.isKeyDown(Input.KEY_LSHIFT)) speed = 0.8f;
+        else speed = 0.4f;
 
+    }
 }
