@@ -6,8 +6,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
-import static gameConfig.BasicGame.windowWidth;
-import static gameConfig.BasicGame.windowHeight;
+import java.util.Arrays;
+
 import static gameConfig.GamePlay.*;
 
 public class Camera {
@@ -16,23 +16,33 @@ public class Camera {
     private int mapWidth, mapHeight;
     public Rectangle viewPort;
     private TiledMap map;
-    private boolean[][] blocked;
+    public static boolean[][] blocked;
+    private final GameContainer gameContainer;
 
-    public Camera(TiledMap map, int mapWidth, int mapHeight) {
+    public Camera(TiledMap map, GameContainer gameContainer, int mapWidth, int mapHeight) {
         this.x = 100;
         this.y = 100;
-        this.viewPort = new Rectangle(x, y, windowWidth, windowHeight);
+        this.gameContainer = gameContainer;
+        this.viewPort = new Rectangle(x, y, gameContainer.getWidth(), gameContainer.getHeight());
         this.map = map;
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
+        blocked = new boolean[gameContainer.getWidth() % tileWidth][gameContainer.getHeight() % tileHeight];
     }
 
+    //TODO rewrite initialize blocked
+
     private void initializeBlocked() {
+        int tmpXStart = (int) (viewPort.getX() / tileWidth - 1) % 300;
+        int tmpYStart = (int) (viewPort.getY() / tileHeight - 1);
+        int tmpXFinish = (int) ((viewPort.getWidth()) / tileWidth) - tmpXStart - 1;
+        int tmpYFinish = (int) ((viewPort.getHeight()) / tileHeight) - tmpYStart - 1;
+
         for (int l = 0; l < numberOfLayers; l++) {
             String layerValue = map.getLayerProperty(l, "blocked", "false");
             if (layerValue.equals("true")) {
-                for (int c = x / 30; c < (int) ((viewPort.getWidth()) / 30) - x / 30 + 1; c++) {
-                    for (int r = y / 30; r < (int) ((viewPort.getHeight()) / 30) - y / 30 + 1; r++) {
+                for (int c = Math.abs(tmpXStart); c < Math.abs(tmpXFinish) % 300; c++) {
+                    for (int r = Math.abs(tmpYStart) % 300; r < Math.abs(tmpYFinish) % 300; r++) {
                         if (map.getTileId(c, r, l) != 0) {
                             blocked[c][r] = true;
                         }
@@ -43,20 +53,20 @@ public class Camera {
     }
 
     public boolean[][] translate(Graphics graphics, Hero hero) {
-        if (hero.getX() - (float) windowWidth / 2 <= 0) {
+        if (hero.getX() - (float) gameContainer.getWidth() / 2 <= 0) {
             x = 0;
-        } else if (hero.getX() + (float) windowWidth / 2 >= mapWidth) {
-            x = -mapWidth + windowWidth;
+        } else if (hero.getX() + (float) gameContainer.getWidth() / 2 >= mapWidth) {
+            x = -mapWidth + gameContainer.getWidth();
         } else {
-            x = (int) -hero.getX() + windowWidth / 2;
+            x = (int) -hero.getX() + gameContainer.getWidth() / 2;
         }
 
-        if (hero.getY() - (float) windowHeight / 2 <= 0) {
+        if (hero.getY() - (float) gameContainer.getHeight() / 2 <= 0) {
             y = 0;
-        } else if (hero.getY() + (float) windowHeight / 2 >= mapHeight) {
-            y = -mapHeight + windowHeight;
+        } else if (hero.getY() + (float) gameContainer.getHeight() / 2 >= mapHeight) {
+            y = -mapHeight + gameContainer.getHeight();
         } else {
-            y = (int) -hero.getY() + windowHeight / 2;
+            y = (int) -hero.getY() + gameContainer.getHeight() / 2;
         }
 
         graphics.setColor(Color.black);
@@ -71,12 +81,13 @@ public class Camera {
     }
 
     public void drawMap() {
-        //map.render(0, 0);
+//        map.render(0, 0);
         int tmpXStart = (int) (viewPort.getX() / tileWidth);
         int tmpYStart = (int) (viewPort.getY() / tileHeight);
-        int tmpXFinish = (int) ((viewPort.getWidth()+1) / tileWidth) - tmpXStart + 2;
-        int tmpYFinish = (int) ((viewPort.getHeight()+1) / tileHeight) - tmpYStart + 2;
+        int tmpXFinish = (int) ((viewPort.getWidth()) / tileWidth) - tmpXStart + 2;
+        int tmpYFinish = (int) ((viewPort.getHeight()) / tileHeight) - tmpYStart + 2;
         map.render(tmpXStart, tmpYStart, 0, 0, tmpXFinish, tmpYFinish);
         //initializeBlocked();
+        //sdSystem.out.println(Arrays.deepToString(blocked));
     }
 }

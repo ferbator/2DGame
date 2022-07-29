@@ -7,7 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class GameMenu extends BasicGameState {
 
-    private int stateId;
+    private final int stateId;
     private Rectangle exit;
     private Rectangle play;
     private Rectangle cursor;

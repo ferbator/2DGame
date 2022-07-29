@@ -1,5 +1,5 @@
-package gameConfig;
-
+import gameConfig.GameMenu;
+import gameConfig.GamePlay;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -9,8 +9,8 @@ public class BasicGame extends StateBasedGame {
     public static final String gameName = "Test";
     public static final int playId = 1;
     public static final int menuId = 0;
-    public static final int windowHeight = 320; //960
-    public static final int windowWidth = 320; //960
+    public static final int windowHeight = 300; //960
+    public static final int windowWidth = 300; //960
 
     public BasicGame(String gameName) {
         super(gameName);

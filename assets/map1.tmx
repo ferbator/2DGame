@@ -3,7 +3,7 @@
  <tileset firstgid="1" source="tiles.tsx"/>
  <layer id="1" name="Слой тайлов 1" width="30" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3NsQ0AAAjDsLLw/8l8AQyOlNnJXV27c7lcLpfL5XK5XO5X96IB1OqOuBAOAAA=
+   H4sIAAAAAAAACmNgGDjwjM541N5Re4ezvfyMlGNa2csDxL8YUPFwsxdmPg+avTD+QNnLQ2N7icHDwV4eNIwtnGlhL670jE2MFvbiyj+0SleE7KVHuUGLcpJeeNTeUXtH7R369g4EAACuuGkfEA4AAA==
   </data>
  </layer>
  <layer id="2" name="Слой тайлов 2" width="30" height="30">
@@ -11,7 +11,7 @@
    <property name="blocked" value="true"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACpNkYGAIozOWgtL0BjD7R+0dtXfU3lF7sZVNtLYXm1n0spcYscFobxgONjn2kipOqr2kAELuoVU+Gy75d6TYS6o5lNpLbtqjxN6B0EutcCJHHyWAUv8ORByh209s3UsNe8kFA2mvLgPh8KI21gNiAJZ8mo8QDgAA
+   H4sIAAAAAAAACu2VywmAMBBE04b2oOXYlbajnj2qNaiduAeFIFGzXwk4MAQCO49sliRzzlXGzo/VWif/537LrSMyGgWur4GQL8Hlyu9dyverwaXm+dbmhrKwXEp/QzlW5+VyW3AH7gW4mP0RPIFnBBejO+4CXsGbMVdbFtzQv5H6ebE5XO7Te/j09nC42rUac0Gt584Eh4upvfZMcq5i/14JLlVfcgv33i9pl+AdMoyuWRAOAAA=
   </data>
  </layer>
 </map>
