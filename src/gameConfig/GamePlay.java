@@ -6,10 +6,12 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
+import static gameConfig.BasicGame.windowHeight;
+import static gameConfig.BasicGame.windowWidth;
+
 public class GamePlay extends BasicGameState {
 
-    static int WIDTH = 500;
-    static int HEIGHT = 500;
+    private int stateId;
 
     private TiledMap map;
     private Rectangle square;
@@ -23,19 +25,25 @@ public class GamePlay extends BasicGameState {
     private float mapY = 300f;
 
     private float speed = 0.1f;
-    private boolean[][] blocked;
+    public boolean[][] blocked;
     private int mapHeight;
     private int mapWidth;
-    private int tileWidth = 32;
-    private int tileHeight = 32;
+    public static int tileWidth = 32;
+    public static int tileHeight = 32;
     private static final int spriteWidth = 50;
     private static final int spriteHeight = 50;
 
-    private static final int numberOfTilesInRow = 30;
-    private static final int numberOfTilesInColumn = 30;
-    private static final int numberOfLayers = 2;
+    public static final int numberOfTilesInRow = 30;
+    public static final int numberOfTilesInColumn = 30;
+    public static final int numberOfLayers = 2;
 
     public GamePlay(int stateId) {
+        this.stateId = stateId;
+    }
+
+    @Override
+    public int getID() {
+        return stateId;
     }
 
     private void initializeBlocked() {
@@ -54,41 +62,41 @@ public class GamePlay extends BasicGameState {
     }
 
     @Override
-    public int getID() {
-        return 1;
-    }
-
-    @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-//        square = new Rectangle((int) x, (int) y, 32, 32);
-//        map = new TiledMap("entities/map1.tmx");
+        square = new Rectangle(100, 50, 32, 32);
+
+        //map = new TiledMap("entities/map1.tmx");
 //        blocked = new boolean[numberOfTilesInRow][numberOfTilesInColumn];
 //        initializeBlocked();
 
         map = new TiledMap("entities/map1.tmx");
+
 //        blocked = new boolean[numberOfTilesInRow][numberOfTilesInColumn];
 //        initializeBlocked();
         mapWidth = map.getWidth() * map.getTileWidth();
         mapHeight = map.getHeight() * map.getTileHeight();
         tileHeight = map.getTileHeight();
         tileWidth = map.getTileWidth();
-        player = new Hero(tileWidth * 4, tileHeight * 4, 32, 32, new Image("assets/hero_down_1.png"));
+        player = new Hero(tileWidth * 4, tileHeight * 4, 50, 50, new Image("assets/hero_down_1.png"));
         camera = new Camera(map, mapWidth, mapHeight);
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
 
-//        FactoryWU.frame.GP.cam.locationX = (int) (-FactoryWU.world.player.getXInt()+((this.getWidth()/cam.zoomLevel)/2)-(10*cam.zoomLevel));
-//        FactoryWU.frame.GP.cam.locationY = (int) (-FactoryWU.world.player.getYInt()+((this.getHeight()/cam.zoomLevel)/2)-(10*cam.zoomLevel));
 
 //        map.render(0, 0);
-//        graphics.drawString("Howdy! " + "X:" + x + "  Y:" + y + "\n" + " V:" + speed, 500, 50);
 //        graphics.fill(square);
 
+        graphics.setBackground(Color.white);
+        graphics.setColor(Color.white);
         camera.translate(graphics, player);
-        map.render(0, 0);
+        graphics.fill(square);
+        graphics.fill(new Rectangle(500, 50, 32, 32));
+        graphics.fill(new Rectangle(754, 850, 32, 32));
         player.render();
+
+
     }
 
     private boolean isBlocked(float x, float y) {
@@ -100,7 +108,7 @@ public class GamePlay extends BasicGameState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input input = gameContainer.getInput();
-        player.update(gameContainer, mapWidth, mapHeight, i, tileWidth, tileHeight);
+        player.update(gameContainer, mapWidth, mapHeight, i, tileWidth, tileHeight, blocked);
 //        if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A)) {
 //            if (!isBlocked(x - i * speed, y + 1) && !isBlocked(x - i * speed, y + tileHeight - 1)) {
 //                x -= speed * i;

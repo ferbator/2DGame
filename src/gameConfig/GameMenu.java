@@ -7,16 +7,18 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class GameMenu extends BasicGameState {
 
+    private int stateId;
     private Rectangle exit;
     private Rectangle play;
     private Rectangle cursor;
 
     public GameMenu(int stateId) {
+        this.stateId = stateId;
     }
 
     @Override
     public int getID() {
-        return 0;
+        return stateId;
     }
 
     @Override
@@ -28,12 +30,16 @@ public class GameMenu extends BasicGameState {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+        graphics.setBackground(Color.black);
+        graphics.setColor(Color.white);
         graphics.drawString("Menu", 20, 50);
         graphics.fill(exit);
         graphics.fill(play);
+        graphics.setColor(Color.black);
+        graphics.drawString("Exit", 20, 80);
+        graphics.drawString("Play", 20, 150);
+        graphics.setColor(Color.orange);
         graphics.draw(cursor);
-
-
     }
 
     @Override
