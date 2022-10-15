@@ -81,12 +81,12 @@ public class Camera {
     }
 
     public void drawMap() {
-//        map.render(0, 0);
-        int tmpXStart = (int) (viewPort.getX() / tileWidth);
-        int tmpYStart = (int) (viewPort.getY() / tileHeight);
-        int tmpXFinish = (int) ((viewPort.getWidth()) / tileWidth) - tmpXStart + 2;
-        int tmpYFinish = (int) ((viewPort.getHeight()) / tileHeight) - tmpYStart + 2;
-        map.render(tmpXStart, tmpYStart, 0, 0, tmpXFinish, tmpYFinish);
+        map.render(0, 0);
+//        int tmpXStart = (int) (viewPort.getX() / tileWidth);
+//        int tmpYStart = (int) (viewPort.getY() / tileHeight);
+//        int tmpXFinish = (int) ((viewPort.getWidth()) / tileWidth) - tmpXStart + 2;
+//        int tmpYFinish = (int) ((viewPort.getHeight()) / tileHeight) - tmpYStart + 2;
+//        map.render(tmpXStart, tmpYStart, 0, 0, tmpXFinish, tmpYFinish);
         //initializeBlocked();
         //sdSystem.out.println(Arrays.deepToString(blocked));
     }

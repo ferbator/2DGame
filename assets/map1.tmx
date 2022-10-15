@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="1">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="1">
  <tileset firstgid="1" source="tiles.tsx"/>
  <layer id="1" name="Слой тайлов 1" width="30" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgGDjwjM541N5Re4ezvfyMlGNa2csDxL8YUPFwsxdmPg+avTD+QNnLQ2N7icHDwV4eNIwtnGlhL670jE2MFvbiyj+0SleE7KVHuUGLcpJeeNTeUXtH7R369g4EAACuuGkfEA4AAA==
+   H4sIAAAAAAAACmNgGDjwjM4YBvgZ6YtHqr0DFb8j1V5qxN2ovaP2UtPeXwwjy96RFr+j9hJvL73wqL2j9o7aO/TtHQgAAOXfcGoQDgAA
   </data>
  </layer>
  <layer id="2" name="Слой тайлов 2" width="30" height="30">
